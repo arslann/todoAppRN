@@ -26,9 +26,11 @@ const AddNoteScreen = () => {
   const dispatch = useDispatch();
 
   const handleAddTodo = () => {
-    dispatch(addTodo({ text: text, category: category }));
-    setText("");
-    console.log(todos);
+    if (text && category) {
+      dispatch(addTodo(text, category));
+      setText("");
+      setCategory("");
+    }
   };
 
   return (

@@ -5,11 +5,15 @@ import { StyleSheet, Text, View } from "react-native";
 import HomeScreen from "./screens/HomeScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import TabRouter from "./navigation/TabRouter";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { store } from "./store/store";
+import { useEffect } from "react";
+import { createTable } from "./database/db";
+import { fetchTodos } from "./store/reducers/todoSlice";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
+
   return (
     <Provider store={store}>
       <NavigationContainer>

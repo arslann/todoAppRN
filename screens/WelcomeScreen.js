@@ -1,5 +1,5 @@
 import { View, Text, Button, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
   SimpleLineIcons,
@@ -8,8 +8,18 @@ import {
   MaterialCommunityIcons,
   Foundation,
 } from "@expo/vector-icons";
+import { createTable } from "../database/db";
+import { fetchTodos } from "../store/reducers/todoSlice";
+import { useDispatch } from "react-redux";
 
 const WelcomeScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    createTable();
+    dispatch(fetchTodos());
+  }, [dispatch]);
+
   return (
     <View
       style={{
