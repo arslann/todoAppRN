@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTodo } from "../store/reducers/todoSlice";
 import Category from "../components/Category";
+import Toast from "react-native-toast-message";
 
 const { width } = Dimensions.get("window");
 
@@ -30,6 +31,16 @@ const AddNoteScreen = () => {
       dispatch(addTodo(text, category));
       setText("");
       setCategory("");
+
+      Toast.show({
+        type: "success",
+        text1: "Todo added succesfully",
+      });
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "Please select category",
+      });
     }
   };
 
@@ -37,8 +48,17 @@ const AddNoteScreen = () => {
     <View style={styles.container}>
       <View style={{}}>
         <View>
-          <View>
-            <Text>Categories</Text>
+          <View
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginVertical: 24,
+            }}
+          >
+            <Text style={{ fontSize: 24, color: "#fff", fontWeight: "bold" }}>
+              Categories
+            </Text>
           </View>
           <View style={styles.containerRow}>
             {categories.map((categoryName, index) => {

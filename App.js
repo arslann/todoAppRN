@@ -10,6 +10,8 @@ import { store } from "./store/store";
 import { useEffect } from "react";
 import { createTable } from "./database/db";
 import { fetchTodos } from "./store/reducers/todoSlice";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -30,6 +32,7 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
+      <Toast />
     </Provider>
   );
 }
