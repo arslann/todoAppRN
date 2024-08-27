@@ -53,7 +53,7 @@ const AddNoteScreen = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              marginVertical: 24,
+              marginVertical: 8,
             }}
           >
             <Text style={{ fontSize: 24, color: "#fff", fontWeight: "bold" }}>
@@ -82,19 +82,19 @@ const AddNoteScreen = () => {
             placeholder="Enter todo"
           />
         </View>
-        <View
+        <TouchableOpacity
+          onPress={() => handleAddTodo()}
           style={{
             backgroundColor: "rgb(161,171,255)",
             paddingHorizontal: 16,
             paddingVertical: 16,
             borderRadius: 15,
             alignItems: "center",
+            marginTop: 12,
           }}
         >
-          <TouchableOpacity onPress={() => handleAddTodo()}>
-            <Text style={{ color: "black", fontSize: 18 }}>Add Todo</Text>
-          </TouchableOpacity>
-        </View>
+          <Text style={{ color: "black", fontSize: 18 }}>Add Todo</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

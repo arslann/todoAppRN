@@ -5,7 +5,6 @@ import HomeScreen from "../screens/HomeScreen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import AddNoteScreen from "../screens/AddNoteScreen";
-import SearchScreen from "../screens/SearchScreen";
 
 const TabRouter = () => {
   const Tab = createBottomTabNavigator();
@@ -69,31 +68,6 @@ const TabRouter = () => {
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name="add"
-              size={32}
-              color={focused ? "rgb(159,158,191)" : "gray"}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Search"
-        component={SearchScreen}
-        options={{
-          tabBarLabel: ({ focused, color }) => (
-            <Text
-              style={{
-                color: focused ? "rgb(159,158,191)" : "gray",
-                fontSize: 10,
-                fontWeight: 500,
-                textAlign: "center",
-              }}
-            >
-              Search
-            </Text>
-          ),
-          tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons
-              name="search"
               size={32}
               color={focused ? "rgb(159,158,191)" : "gray"}
             />

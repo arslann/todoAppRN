@@ -52,13 +52,33 @@ export const deleteTodoFromDB = (id, callback) => {
   });
 };
 
-export const getTodos = (callback) => {
+export const getTodos = (filterCategory, searchText, callback) => {
+  let query = "SELECT * FROM todos";
+  let params = [];
+  if (filterCategory !== "all" || searchText) {
+    query += " WHERE";
+    if (filterCategory !== "all") {
+      query += " category = ?";
+      params.push(filterCategory);
+    }
+    if (searchText) {
+      if (filterCategory !== "all") query += " AND";
+      query += " text LIKE ?";
+      params.push(`%${searchText}%`);
+    }
+  }
+
+  query += " ORDER BY id DESC;";
   db.transaction((tx) => {
     tx.executeSql(
-      `SELECT * FROM todos`,
-      [],
-      (_, { rows }) => callback(rows._array),
-      (_, error) => console.log("Error fetching todos:", error)
+      query,
+      params,
+      (_, { rows: { _array } }) => {
+        callback(_array);
+      },
+      (tx, error) => {
+        console.error("Error fetching todos", error);
+      }
     );
   });
 };

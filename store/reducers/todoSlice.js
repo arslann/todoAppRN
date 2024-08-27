@@ -6,24 +6,37 @@ import {
   getTodos,
 } from "../../database/db";
 
+const initialState = {
+  todos: [],
+  filterCategory: "all",
+  searchText: "",
+};
+
 const todoSlice = createSlice({
   name: "todos",
-  initialState: [],
+  initialState,
   reducers: {
     setTodos: (state, action) => {
-      return action.payload;
+      state.todos = action.payload;
     },
     addTodoSuccess: (state, action) => {
-      state.push(action.payload);
+      state.todos = [action.payload, ...state.todos];
     },
     toggleTodoSuccess: (state, action) => {
-      const todo = state.find((todo) => todo.id === action.payload.id);
-      if (todo) {
-        todo.completed = action.payload.completed;
-      }
+      state.todos = state.todos.map((todo) =>
+        todo.id === action.payload.id
+          ? { ...todo, completed: action.payload.completed }
+          : todo
+      );
     },
     removeTodoSuccess: (state, action) => {
-      return state.filter((todo) => todo.id !== action.payload);
+      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+    },
+    setFilterCategory: (state, action) => {
+      state.filterCategory = action.payload;
+    },
+    setSearchText: (state, action) => {
+      state.searchText = action.payload;
     },
   },
 });
@@ -33,10 +46,13 @@ export const {
   addTodoSuccess,
   toggleTodoSuccess,
   removeTodoSuccess,
+  setFilterCategory,
+  setSearchText,
 } = todoSlice.actions;
 
-export const fetchTodos = () => (dispatch) => {
-  getTodos((todos) => dispatch(setTodos(todos)));
+export const fetchTodos = () => (dispatch, getState) => {
+  const { filterCategory, searchText } = getState().todos;
+  getTodos(filterCategory, searchText, (todos) => dispatch(setTodos(todos)));
 };
 
 export const addTodo = (text, category) => (dispatch) => {
@@ -47,7 +63,7 @@ export const addTodo = (text, category) => (dispatch) => {
 };
 
 export const toggleTodo = (id) => (dispatch, getState) => {
-  const todo = getState().todos.find((todo) => todo.id === id);
+  const todo = getState().todos.todos.find((todo) => todo.id === id);
   if (todo) {
     toggleTodoInDB(id, !todo.completed, () => {
       dispatch(toggleTodoSuccess({ id, completed: !todo.completed }));

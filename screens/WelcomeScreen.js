@@ -81,7 +81,7 @@ const WelcomeScreen = ({ navigation }) => {
           <Foundation name="page" size={32} color="gray" />
         </View>
       </View>
-      <View
+      <TouchableOpacity
         style={{
           backgroundColor: "rgb(161,171,255)",
           width: "80%",
@@ -90,11 +90,10 @@ const WelcomeScreen = ({ navigation }) => {
           borderRadius: 15,
           alignItems: "center",
         }}
+        onPress={() => navigation.navigate("Tabs")}
       >
-        <TouchableOpacity onPress={() => navigation.navigate("Tabs")}>
-          <Text style={{ color: "black", fontSize: 18 }}>Let's Start</Text>
-        </TouchableOpacity>
-      </View>
+        <Text style={{ color: "black", fontSize: 18 }}>Let's Start</Text>
+      </TouchableOpacity>
     </View>
   );
 };
